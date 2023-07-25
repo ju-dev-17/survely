@@ -4,17 +4,34 @@ import { useState } from "react";
 import Navbar from "../../components/Navbar.jsx";
 import checkmark from "../../assets/checkmark-outline.svg";
 
-function StepOne({ currentStep, nextStep }) {
+function StepBullet({ currentStep, step }) {
+    return (
+        <div className='rounded-full h-10 w-10 flex items-center justify-center mr-2 bg-primary text-white'>
+            {currentStep > step ? <img src={checkmark} alt="Checkmark" width={20} height={20} /> : <>{step}</>}
+        </div>
+    );
+}
+
+function StepOne({ formData, setFormData, currentStep, nextStep }) {
     if (currentStep !== 1) {
         return <></>;
+    }
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     }
 
     return (
         <div className="flex flex-col h-full">
             <h1 className="text-2xl font-bold mb-4">Step 1: Design Form</h1>
             <div className="w-full flex-1 flex flex-col gap-5">
-                <input type="text" name="title" placeholder="Enter a title" className="focus:outline-none bg-background w-full border-2 rounded-lg p-3" />
-                <textarea name="title" placeholder="Enter a description" className="focus:outline-none bg-background w-full border-2 rounded-lg p-3" />
+                <input maxLength={255} value={formData.title} onChange={handleChange} type="text" name="title" placeholder="Enter a title" className="focus:outline-none bg-background w-full border-2 rounded-lg p-3" />
+                <textarea maxLength={255} value={formData.description} onChange={handleChange} name="description" placeholder="Enter a description" className="focus:outline-none bg-background w-full border-2 rounded-lg p-3" />
                 <button className="bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Add field
                 </button>
@@ -79,6 +96,7 @@ function StepThree({ currentStep, prevStep, nextStep }) {
 }
 
 function CreatePage() {
+    const [formData, setFormData] = useState({ title: "", description: "" });
     const [currentStep, setCurrentStep] = useState(1);
 
     const nextStep = () => {
@@ -97,36 +115,15 @@ function CreatePage() {
                     <div className="flex justify-center items-center h-full">
                         <div className="w-full p-8 h-full">
                             <div className="mb-4">
-                                {/* Schrittleiste */}
                                 <div className="flex items-center mb-2">
-                                    <div
-                                        className='rounded-full h-10 w-10 flex items-center justify-center mr-2 bg-primary text-white'
-                                    >
-                                        {currentStep > 1 ? (
-                                            <img src={checkmark} alt="Checkmark" width={20} height={20} />
-                                        ) : <>1</>}
-                                    </div>
-                                    <div
-                                        className={`rounded-full h-10 w-10 flex items-center justify-center mr-2 ${
-                                            currentStep >= 2 ? 'bg-primary text-white' : 'bg-gray-300 text-gray-700'
-                                        }`}
-                                    >
-                                        {currentStep > 2 ? (
-                                            <img src={checkmark} alt="Checkmark" width={20} height={20} />
-                                        ) : <>2</>}
-                                    </div>
-                                    <div
-                                        className={`rounded-full h-10 w-10 flex items-center justify-center ${
-                                            currentStep >= 3 ? 'bg-primary text-white' : 'bg-gray-300 text-gray-700'
-                                        }`}
-                                    >
-                                        {currentStep > 3 ? (
-                                            <img src={checkmark} alt="Checkmark" width={20} height={20} />
-                                        ) : <>3</>}
-                                    </div>
+                                    <StepBullet currentStep={currentStep} step={1} />
+                                    <StepBullet currentStep={currentStep} step={2} />
+                                    <StepBullet currentStep={currentStep} step={3} />
                                 </div>
                             </div>
                             <StepOne
+                                formData={formData}
+                                setFormData={setFormData}
                                 currentStep={currentStep}
                                 nextStep={nextStep}
                             />
@@ -140,6 +137,14 @@ function CreatePage() {
                                 prevStep={prevStep}
                                 nextStep={nextStep}
                             />
+                        </div>
+                    </div>
+                </div>
+                <div className="border-2 border-b-0 rounded-b-none rounded-lg w-full flex-1">
+                    <div className="flex justify-center items-center h-full">
+                        <div className="w-full p-8 h-full flex flex-col gap-3">
+                            <span className="text-2xl font-bold">{formData.title}</span>
+                            <span className="text-xl">{formData.description}</span>
                         </div>
                     </div>
                 </div>
