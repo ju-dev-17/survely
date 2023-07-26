@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {surveyFormDataState} from "../../recoil/atom.js";
+import "survey-core/defaultV2.min.css";
 
 import Navbar from "../../components/Navbar.jsx";
 import checkmark from "../../assets/checkmark-outline.svg";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {surveyFormDataState} from "../../recoil/atom.js";
 
 function StepBullet({ currentStep, step }) {
     return (
