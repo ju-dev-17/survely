@@ -26,10 +26,10 @@ function HomePage() {
                      </span>
                  </div>
                  <div className="flex gap-3">
-                     <Link to="/auth/login" className="bg-primary px-12 py-4 rounded-lg text-center text-white text-xl font-bold select-none">
+                     <Link to="/auth/login" className="bg-primary px-12 py-4 rounded-lg text-center text-white text-xl font-bold select-none hover:shadow-lg transition-all duration-300">
                          Get Started
                      </Link>
-                     <Link to="/docs" className="bg-secondary px-12 py-4 rounded-lg text-center text-white text-xl font-bold select-none">
+                     <Link to="/docs" className="bg-secondary px-12 py-4 rounded-lg text-center text-white text-xl font-bold select-none hover:shadow-lg transition-all duration-300">
                          Docs
                      </Link>
                  </div>
