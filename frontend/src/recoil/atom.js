@@ -7,3 +7,8 @@ export const surveyFormDataState = atom({
         description: ""
     },
 });
+
+export const addFieldModalState = atom({
+    key: 'addFieldModal',
+    default: false,
+});
