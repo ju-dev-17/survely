@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { addFieldModalState, surveyFormDataState } from "../../recoil/atom.js";
 import { Survey } from "survey-react-ui";
 import 'survey-core/modern.min.css';
 
 import Navbar from "../../components/Navbar.jsx";
 import checkmark from "../../assets/checkmark-outline.svg";
-import close from "../../assets/close-outline.svg"
+import close from "../../assets/close-outline.svg";
+import edit from "../../assets/create-outline.svg";
 import useSurveyModel from "../../hooks/useSurveyModel.jsx";
 import simpleQuestion from "../../fields/simpleQuestion.js";
 
@@ -36,6 +37,15 @@ function StepOne({ currentStep, nextStep }) {
         });
     }
 
+    const editField = (field, index) => {
+        console.log(field, index);
+    }
+
+    const deleteField = (field, index) => {
+        const updatedSurveyFormData = surveyFormData.fields.filter((_, i) => i !== index);
+        setSurveyFormData(updatedSurveyFormData);
+    }
+
     return (
         <div className="flex flex-col h-full">
             <h1 className="text-2xl font-bold mb-4">Step 1: Design Form</h1>
@@ -45,6 +55,20 @@ function StepOne({ currentStep, nextStep }) {
                 <button onClick={() => setIsVisible(true)} className="bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Add field
                 </button>
+                {surveyFormData.fields.length > 0 && (
+                    <div className="flex flex-col gap-2">
+                        {surveyFormData.fields.map((field, index) => (
+                            <div key={index} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2">
+                                <span className="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
+                                <div className="flex-grow font-medium px-2">{field.title}</div>
+                                <div className="flex justify-between items-center gap-3">
+                                    <img onClick={() => editField(field, index)} src={edit} alt="Edit Field" width={24} height={24} />
+                                    <img onClick={() => deleteField(field, index)} src={close} alt="Delete Field" width={24} height={24} />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
             <button
                 className="bg-primary text-white font-bold py-2 px-4 mb-12 rounded focus:outline-none focus:shadow-outline"
@@ -117,7 +141,7 @@ function AddFieldModal() {
         setSurveyFormData({
             ...surveyFormData,
             fields: [...surveyFormData.fields, simpleQuestion]
-        })
+        });
         setIsVisible(false);
     }
 
@@ -131,16 +155,6 @@ function AddFieldModal() {
                             <div className="text-gray-700 text-lg font-semibold py-2 px-2 flex justify-between items-center">
                                 <span>Choose a field</span>
                                 <img onClick={() => setIsVisible(false)} className="cursor-pointer" src={close} alt="Close Modal" width={32} height={32} />
-                            </div>
-                            <div className="flex items-center bg-gray-200 rounded-md">
-                                <div className="pl-2">
-                                    <svg className="fill-current text-gray-500 w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path className="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
-                                    </svg>
-                                </div>
-                                <input
-                                    className="w-full rounded-md bg-gray-200 text-gray-700 leading-tight focus:outline-none py-2 px-2"
-                                    id="search" type="text" placeholder="Search fields" />
                             </div>
                             <div className="py-3 text-sm">
                                 <div onClick={handleClick} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
@@ -158,7 +172,6 @@ function AddFieldModal() {
 
 function CreatePage() {
     const survey = useSurveyModel();
-    const surveyFormData = useRecoilValue(surveyFormDataState);
     const [currentStep, setCurrentStep] = useState(1);
 
     const surveyOptions = {
@@ -205,7 +218,7 @@ function CreatePage() {
                         </div>
                     </div>
                 </div>
-                <div className="border-2 border-b-0 rounded-b-none rounded-lg w-full flex-1">
+                <div className="border-2 border-b-0 rounded-b-none rounded-lg w-full flex-1" style={{ wordBreak: 'break-word' }}>
                     <Survey model={survey} options={surveyOptions} />
                 </div>
                 <AddFieldModal />
