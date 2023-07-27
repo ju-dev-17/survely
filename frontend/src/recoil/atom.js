@@ -4,7 +4,8 @@ export const surveyFormDataState = atom({
     key: 'surveyFormData',
     default: {
         title: "",
-        description: ""
+        description: "",
+        fields: []
     },
 });
 

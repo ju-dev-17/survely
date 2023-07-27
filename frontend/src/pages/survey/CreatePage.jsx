@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {addFieldModalState, surveyFormDataState} from "../../recoil/atom.js";
-import "survey-core/defaultV2.min.css";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { addFieldModalState, surveyFormDataState } from "../../recoil/atom.js";
+import { Survey } from "survey-react-ui";
+import 'survey-core/modern.min.css';
 
 import Navbar from "../../components/Navbar.jsx";
 import checkmark from "../../assets/checkmark-outline.svg";
 import close from "../../assets/close-outline.svg"
+import useSurveyModel from "../../hooks/useSurveyModel.jsx";
 
 function StepBullet({ currentStep, step }) {
     return (
@@ -135,8 +137,7 @@ function AddFieldModal() {
                             <div className="py-3 text-sm">
                                 <div onClick={() => setIsVisible(false)} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
                                     <span className="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
-                                    <div className="flex-grow font-medium px-2">Tighten Co.</div>
-                                    <div className="text-sm font-normal text-gray-500 tracking-wide">Team</div>
+                                    <div className="flex-grow font-medium px-2">Simple Question</div>
                                 </div>
                             </div>
                         </div>
@@ -148,6 +149,7 @@ function AddFieldModal() {
 }
 
 function CreatePage() {
+    const survey = useSurveyModel();
     const surveyFormData = useRecoilValue(surveyFormDataState);
     const [currentStep, setCurrentStep] = useState(1);
 
@@ -192,9 +194,8 @@ function CreatePage() {
                 </div>
                 <div className="border-2 border-b-0 rounded-b-none rounded-lg w-full flex-1">
                     <div className="flex justify-center items-center h-full">
-                        <div className="w-full p-8 h-full flex flex-col gap-3">
-                            <span className="text-2xl font-bold">{surveyFormData.title}</span>
-                            <span className="text-xl">{surveyFormData.description}</span>
+                        <div className="w-full h-full flex flex-col">
+                            <Survey model={survey} />
                         </div>
                     </div>
                 </div>
