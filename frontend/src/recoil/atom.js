@@ -5,7 +5,23 @@ export const surveyFormDataState = atom({
     default: {
         title: "",
         description: "",
-        fields: []
+        fields: [
+            {
+                "type": "text",
+                "name": "question",
+                "title": "Question",
+            },
+            {
+                "type": "text",
+                "name": "question",
+                "title": "Question"
+            },
+            {
+                "type": "text",
+                "name": "question",
+                "title": "Question"
+            },
+        ]
     },
 });
 

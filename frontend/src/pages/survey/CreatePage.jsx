@@ -9,6 +9,7 @@ import Navbar from "../../components/Navbar.jsx";
 import checkmark from "../../assets/checkmark-outline.svg";
 import close from "../../assets/close-outline.svg"
 import useSurveyModel from "../../hooks/useSurveyModel.jsx";
+import simpleQuestion from "../../fields/simpleQuestion.js";
 
 function StepBullet({ currentStep, step }) {
     return (
@@ -39,7 +40,7 @@ function StepOne({ currentStep, nextStep }) {
         <div className="flex flex-col h-full">
             <h1 className="text-2xl font-bold mb-4">Step 1: Design Form</h1>
             <div className="w-full flex-1 flex flex-col gap-5">
-                <input required maxLength={255} value={surveyFormData.title} onChange={handleChange} type="text" name="title" placeholder="Enter a title" className="focus:outline-none bg-background w-full border-2 rounded-lg p-3" />
+                <input autoFocus required maxLength={255} value={surveyFormData.title} onChange={handleChange} type="text" name="title" placeholder="Enter a title" className="focus:outline-none bg-background w-full border-2 rounded-lg p-3" />
                 <textarea required maxLength={255} value={surveyFormData.description} onChange={handleChange} name="description" placeholder="Enter a description" className="focus:outline-none bg-background w-full border-2 rounded-lg p-3" />
                 <button onClick={() => setIsVisible(true)} className="bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                     Add field
@@ -105,10 +106,19 @@ function StepThree({ currentStep, prevStep, nextStep }) {
 }
 
 function AddFieldModal() {
+    const [surveyFormData, setSurveyFormData] = useRecoilState(surveyFormDataState);
     const [isVisible, setIsVisible] = useRecoilState(addFieldModalState);
 
     if (!isVisible) {
         return <></>;
+    }
+
+    const handleClick = () => {
+        setSurveyFormData({
+            ...surveyFormData,
+            fields: [...surveyFormData.fields, simpleQuestion]
+        })
+        setIsVisible(false);
     }
 
     return (
@@ -124,10 +134,8 @@ function AddFieldModal() {
                             </div>
                             <div className="flex items-center bg-gray-200 rounded-md">
                                 <div className="pl-2">
-                                    <svg className="fill-current text-gray-500 w-6 h-6" xmlns="http://www.w3.org/2000/svg"
-                                         viewBox="0 0 24 24">
-                                        <path className="heroicon-ui"
-                                              d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+                                    <svg className="fill-current text-gray-500 w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path className="heroicon-ui" d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
                                     </svg>
                                 </div>
                                 <input
@@ -135,7 +143,7 @@ function AddFieldModal() {
                                     id="search" type="text" placeholder="Search fields" />
                             </div>
                             <div className="py-3 text-sm">
-                                <div onClick={() => setIsVisible(false)} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
+                                <div onClick={handleClick} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 my-2">
                                     <span className="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
                                     <div className="flex-grow font-medium px-2">Simple Question</div>
                                 </div>
@@ -152,6 +160,11 @@ function CreatePage() {
     const survey = useSurveyModel();
     const surveyFormData = useRecoilValue(surveyFormDataState);
     const [currentStep, setCurrentStep] = useState(1);
+
+    const surveyOptions = {
+        focusFirstQuestionAutomatic: false, // Disable autofocus on the first question
+        focusFirstQuestionAutomaticTimeout: 0, // Set the timeout to 0 to disable autofocus on all questions
+    }
 
     const nextStep = () => {
         setCurrentStep((prevStep) => prevStep + 1);
@@ -193,11 +206,7 @@ function CreatePage() {
                     </div>
                 </div>
                 <div className="border-2 border-b-0 rounded-b-none rounded-lg w-full flex-1">
-                    <div className="flex justify-center items-center h-full">
-                        <div className="w-full h-full flex flex-col">
-                            <Survey model={survey} />
-                        </div>
-                    </div>
+                    <Survey model={survey} options={surveyOptions} />
                 </div>
                 <AddFieldModal />
             </div>

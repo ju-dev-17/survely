@@ -2,23 +2,23 @@ const json = {
     "pages": [
         {
             "name": "",
-            "title": "Test",
-            "description": "Test",
+            "title": "",
+            "description": "",
             "elements": [
                 {
                     "type": "text",
-                    "name": "question1",
-                    "title": "Question 1"
+                    "name": "question",
+                    "title": "Question",
                 },
                 {
                     "type": "text",
-                    "name": "question1",
-                    "title": "Question 1"
+                    "name": "question",
+                    "title": "Question"
                 },
                 {
                     "type": "text",
-                    "name": "question1",
-                    "title": "Question 1"
+                    "name": "question",
+                    "title": "Question"
                 },
             ],
         }
