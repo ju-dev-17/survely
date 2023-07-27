@@ -14,7 +14,7 @@ import java.util.UUID;
 public class CustomerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID uuid;
     @Column(unique = true)
     private String email;
     private String firstname;
