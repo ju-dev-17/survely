@@ -1,3 +1,5 @@
 package de.judev.backend.customer;
 
-public record CustomerDTO(String email, String firstname, String lastname, String password) { }
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+public record CustomerDTO(String email, String firstname, String lastname, @JsonIgnore String password) { }

@@ -32,12 +32,11 @@ public class CustomerServiceImpl implements CustomerService {
             return false;
         }
 
-        CustomerModel customerModel = new CustomerModel(
-                customerDTO.email(),
-                customerDTO.firstname(),
-                customerDTO.lastname(),
-                passwordEncoder.encode(customerDTO.password())
-        );
+        CustomerModel customerModel = new CustomerModel();
+        customerModel.setEmail(customerDTO.email());
+        customerModel.setFirstname(customerDTO.firstname());
+        customerModel.setLastname(customerDTO.lastname());
+        customerModel.setPassword(passwordEncoder.encode(customerDTO.password()));
 
         repository.save(customerModel);
 
