@@ -27,10 +27,10 @@ public class CustomerController {
         }
 
         CustomerDTO customerDTO = new CustomerDTO(
-          customerModel.getUuid(),
-          customerModel.getEmail(),
-          customerModel.getFirstname(),
-          customerModel.getLastname()
+                customerModel.getEmail(),
+                customerModel.getFirstname(),
+                customerModel.getLastname(),
+                customerModel.getPassword()
         );
 
         return new ResponseEntity<>(
@@ -46,22 +46,22 @@ public class CustomerController {
         return customerModels
                 .stream()
                 .map(customerModel -> new CustomerDTO(
-                        customerModel.getUuid(),
                         customerModel.getEmail(),
                         customerModel.getFirstname(),
-                        customerModel.getLastname()
+                        customerModel.getLastname(),
+                        customerModel.getPassword()
                 ))
                 .collect(Collectors.toList());
     }
 
     @PostMapping
-    public ResponseEntity<String> createCustomer(@RequestBody CustomerModel customerModel) {
-        boolean isCreated = service.createCustomer(customerModel);
+    public ResponseEntity<String> createCustomer(@RequestBody CustomerDTO customerDTO) {
+        boolean isCreated = service.createCustomer(customerDTO);
 
         if (!isCreated) {
             return new ResponseEntity<>(
-                    "Customer creating failed.",
-                    HttpStatus.INTERNAL_SERVER_ERROR
+                    "Customer already exists.",
+                    HttpStatus.CONFLICT
             );
         }
 
@@ -77,8 +77,8 @@ public class CustomerController {
 
         if (!isUpdated) {
             return new ResponseEntity<>(
-                    "Customer updating failed.",
-                    HttpStatus.INTERNAL_SERVER_ERROR
+                    "Customer does not exists.",
+                    HttpStatus.NOT_FOUND
             );
         }
 
@@ -94,8 +94,8 @@ public class CustomerController {
 
         if (!isDeleted) {
             return new ResponseEntity<>(
-                    "Customer deleting failed.",
-                    HttpStatus.INTERNAL_SERVER_ERROR
+                    "Customer does not exists.",
+                    HttpStatus.NOT_FOUND
             );
         }
 

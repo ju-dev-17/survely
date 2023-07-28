@@ -20,4 +20,11 @@ public class CustomerModel {
     private String firstname;
     private String lastname;
     private String password;
+
+    public CustomerModel(String email, String firstname, String lastname, String password) {
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.password = password;
+    }
 }

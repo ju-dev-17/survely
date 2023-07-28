@@ -23,12 +23,19 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean createCustomer(CustomerModel customerModel) {
-        Optional<CustomerModel> customerModelOptional = repository.findByEmail(customerModel.getEmail());
+    public boolean createCustomer(CustomerDTO customerDTO) {
+        Optional<CustomerModel> customerModelOptional = repository.findByEmail(customerDTO.email());
 
         if (customerModelOptional.isPresent()) {
             return false;
         }
+
+        CustomerModel customerModel = new CustomerModel(
+                customerDTO.email(),
+                customerDTO.firstname(),
+                customerDTO.lastname(),
+                customerDTO.password()
+        );
 
         repository.save(customerModel);
 
@@ -37,11 +44,31 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean updateCustomer(UUID uuid, CustomerDTO customerDTO) {
-        return false;
+        Optional<CustomerModel> customerModelOptional = repository.findById(uuid);
+
+        if (customerModelOptional.isEmpty()) {
+            return false;
+        }
+
+        CustomerModel customerModel = customerModelOptional.get();
+        customerModel.setEmail(customerDTO.email());
+        customerModel.setFirstname(customerDTO.firstname());
+        customerModel.setLastname(customerDTO.lastname());
+        customerModel.setPassword(customerDTO.password());
+
+        return true;
     }
 
     @Override
     public boolean deleteCustomer(UUID uuid) {
-        return false;
+        Optional<CustomerModel> customerModelOptional = repository.findById(uuid);
+
+        if (customerModelOptional.isEmpty()) {
+            return false;
+        }
+
+        repository.delete(customerModelOptional.get());
+
+        return true;
     }
 }
