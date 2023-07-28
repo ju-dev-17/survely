@@ -43,7 +43,11 @@ function StepOne({ currentStep, nextStep }) {
 
     const deleteField = (field, index) => {
         const updatedSurveyFormData = surveyFormData.fields.filter((_, i) => i !== index);
-        setSurveyFormData(updatedSurveyFormData);
+        if (updatedSurveyFormData.length > 0) {
+            setSurveyFormData({
+                fields: updatedSurveyFormData,
+            });
+        }
     }
 
     return (
@@ -174,11 +178,6 @@ function CreatePage() {
     const survey = useSurveyModel();
     const [currentStep, setCurrentStep] = useState(1);
 
-    const surveyOptions = {
-        focusFirstQuestionAutomatic: false, // Disable autofocus on the first question
-        focusFirstQuestionAutomaticTimeout: 0, // Set the timeout to 0 to disable autofocus on all questions
-    }
-
     const nextStep = () => {
         setCurrentStep((prevStep) => prevStep + 1);
     }
@@ -219,7 +218,7 @@ function CreatePage() {
                     </div>
                 </div>
                 <div className="border-2 border-b-0 rounded-b-none rounded-lg w-full flex-1" style={{ wordBreak: 'break-word' }}>
-                    <Survey model={survey} options={surveyOptions} />
+                    <Survey model={survey} />
                 </div>
                 <AddFieldModal />
             </div>

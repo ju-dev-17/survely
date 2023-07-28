@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -13,17 +14,25 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerModel getCustomer(UUID uuid) {
-        return null;
+        return repository.findById(uuid).orElse(null);
     }
 
     @Override
     public List<CustomerModel> getAllCustomer() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
     public boolean createCustomer(CustomerModel customerModel) {
-        return false;
+        Optional<CustomerModel> customerModelOptional = repository.findByEmail(customerModel.getEmail());
+
+        if (customerModelOptional.isPresent()) {
+            return false;
+        }
+
+        repository.save(customerModel);
+
+        return true;
     }
 
     @Override
