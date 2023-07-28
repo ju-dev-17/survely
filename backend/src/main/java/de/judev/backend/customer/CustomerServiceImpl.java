@@ -1,6 +1,7 @@
 package de.judev.backend.customer;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public CustomerModel getCustomer(UUID uuid) {
@@ -34,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
                 customerDTO.email(),
                 customerDTO.firstname(),
                 customerDTO.lastname(),
-                customerDTO.password()
+                passwordEncoder.encode(customerDTO.password())
         );
 
         repository.save(customerModel);
@@ -54,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
         customerModel.setEmail(customerDTO.email());
         customerModel.setFirstname(customerDTO.firstname());
         customerModel.setLastname(customerDTO.lastname());
-        customerModel.setPassword(customerDTO.password());
+        customerModel.setPassword(passwordEncoder.encode(customerDTO.password()));
 
         return true;
     }
