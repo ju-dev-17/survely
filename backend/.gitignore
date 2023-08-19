@@ -33,3 +33,5 @@ build/
 
 ### Maven ###
 .mvn/
+
+**/src/main/resources/application.properties
