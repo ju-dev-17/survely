@@ -1,5 +1,6 @@
-package de.judev.backend.customer;
+package de.judev.backend.repository;
 
+import de.judev.backend.model.CustomerModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

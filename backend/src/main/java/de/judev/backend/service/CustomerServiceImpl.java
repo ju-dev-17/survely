@@ -1,5 +1,8 @@
-package de.judev.backend.customer;
+package de.judev.backend.service;
 
+import de.judev.backend.dto.RegisterRequest;
+import de.judev.backend.model.CustomerModel;
+import de.judev.backend.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,26 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public boolean createCustomer(CustomerDTO customerDTO) {
-        Optional<CustomerModel> customerModelOptional = repository.findByEmail(customerDTO.email());
-
-        if (customerModelOptional.isPresent()) {
-            return false;
-        }
-
-        CustomerModel customerModel = new CustomerModel();
-        customerModel.setEmail(customerDTO.email());
-        customerModel.setFirstname(customerDTO.firstname());
-        customerModel.setLastname(customerDTO.lastname());
-        customerModel.setPassword(passwordEncoder.encode(customerDTO.password()));
-
-        repository.save(customerModel);
-
-        return true;
-    }
-
-    @Override
-    public boolean updateCustomer(UUID uuid, CustomerDTO customerDTO) {
+    public boolean updateCustomer(UUID uuid, RegisterRequest registerRequest) {
         Optional<CustomerModel> customerModelOptional = repository.findById(uuid);
 
         if (customerModelOptional.isEmpty()) {
@@ -52,10 +36,10 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         CustomerModel customerModel = customerModelOptional.get();
-        customerModel.setEmail(customerDTO.email());
-        customerModel.setFirstname(customerDTO.firstname());
-        customerModel.setLastname(customerDTO.lastname());
-        customerModel.setPassword(passwordEncoder.encode(customerDTO.password()));
+        customerModel.setEmail(registerRequest.email());
+        customerModel.setFirstname(registerRequest.firstname());
+        customerModel.setLastname(registerRequest.lastname());
+        customerModel.setPassword(passwordEncoder.encode(registerRequest.password()));
 
         return true;
     }

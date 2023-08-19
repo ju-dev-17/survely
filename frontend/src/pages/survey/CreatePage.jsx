@@ -8,7 +8,6 @@ import 'survey-core/modern.min.css';
 import Navbar from "../../components/Navbar.jsx";
 import checkmark from "../../assets/checkmark-outline.svg";
 import close from "../../assets/close-outline.svg";
-import edit from "../../assets/create-outline.svg";
 import useSurveyModel from "../../hooks/useSurveyModel.jsx";
 import simpleQuestion from "../../fields/simpleQuestion.js";
 
@@ -16,6 +15,57 @@ function StepBullet({ currentStep, step }) {
     return (
         <div className='rounded-full h-10 w-10 flex items-center justify-center mr-2 bg-primary text-white'>
             {currentStep > step ? <img src={checkmark} alt="Checkmark" width={20} height={20} /> : <>{step}</>}
+        </div>
+    );
+}
+
+function Field({ surveyFormData, setSurveyFormData, field, index }) {
+    const [inputValue, setInputValue] = useState(field.title.toString());
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [clickCount, setClickCount] = useState(0);
+
+    const handleClick = () => {
+        setClickCount((prevClickCount) => prevClickCount + 1);
+        if (clickCount === 1) {
+            handleClick();
+            setClickCount(0);
+        }
+        console.log(clickCount)
+    }
+
+    const handleChange = (event) => {
+        setInputValue(event.target.value);
+        const surveyField = surveyFormData.fields.find((_, i) =>  i === index);
+        surveyField.title = inputValue;
+
+        const fields = surveyFormData.fields;
+
+        setSurveyFormData({
+           ...surveyFormData,
+            fields
+        });
+    }
+
+    const deleteField = (field, index) => {
+        const updatedSurveyFormData = surveyFormData.fields.filter((_, i) => i !== index);
+        if (updatedSurveyFormData.length > 0) {
+            setSurveyFormData({
+                ...surveyFormData,
+                fields: updatedSurveyFormData
+            });
+        }
+    }
+
+    return (
+        <div onClick={handleClick} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2">
+            <span className="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
+            <input
+                className="flex-grow font-medium px-2 bg-background hover:bg-blue-100 focus:outline-none cursor-pointer"
+                onChange={handleChange}
+                value={inputValue}
+                disabled={isDisabled}
+            />
+            <img onClick={() => deleteField(field, index)} src={close} alt="Delete Field" width={24} height={24} />
         </div>
     );
 }
@@ -37,19 +87,6 @@ function StepOne({ currentStep, nextStep }) {
         });
     }
 
-    const editField = (field, index) => {
-        console.log(field, index);
-    }
-
-    const deleteField = (field, index) => {
-        const updatedSurveyFormData = surveyFormData.fields.filter((_, i) => i !== index);
-        if (updatedSurveyFormData.length > 0) {
-            setSurveyFormData({
-                fields: updatedSurveyFormData,
-            });
-        }
-    }
-
     return (
         <div className="flex flex-col h-full">
             <h1 className="text-2xl font-bold mb-4">Step 1: Design Form</h1>
@@ -62,14 +99,13 @@ function StepOne({ currentStep, nextStep }) {
                 {surveyFormData.fields.length > 0 && (
                     <div className="flex flex-col gap-2">
                         {surveyFormData.fields.map((field, index) => (
-                            <div key={index} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2">
-                                <span className="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
-                                <div className="flex-grow font-medium px-2">{field.title}</div>
-                                <div className="flex justify-between items-center gap-3">
-                                    <img onClick={() => editField(field, index)} src={edit} alt="Edit Field" width={24} height={24} />
-                                    <img onClick={() => deleteField(field, index)} src={close} alt="Delete Field" width={24} height={24} />
-                                </div>
-                            </div>
+                            <Field
+                                key={index}
+                                surveyFormData={surveyFormData}
+                                setSurveyFormData={setSurveyFormData}
+                                field={field}
+                                index={index}
+                            />
                         ))}
                     </div>
                 )}
