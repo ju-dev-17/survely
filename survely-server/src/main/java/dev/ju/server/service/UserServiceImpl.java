@@ -1,6 +1,6 @@
 package dev.ju.server.service;
 
-import dev.ju.server.dto.RegisterRequest;
+import dev.ju.server.dto.UserRequest;
 import dev.ju.server.enums.Role;
 import dev.ju.server.model.UserModel;
 import dev.ju.server.repository.UserRepository;
@@ -29,28 +29,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel createUser(RegisterRequest registerRequest) {
-        Optional<UserModel> userModelOptional = repository.findByEmail(registerRequest.email());
+    public UserModel createUser(UserRequest userRequest) {
+        Optional<UserModel> userModelOptional = repository.findByEmail(userRequest.email());
 
         if (userModelOptional.isPresent()) {
             return null;
         }
 
         UserModel userModel = new UserModel();
-        userModel.setEmail(registerRequest.email());
-        userModel.setFirstname(registerRequest.firstname());
-        userModel.setLastname(registerRequest.lastname());
-        userModel.setPassword(passwordEncoder.encode(registerRequest.password()));
+        userModel.setEmail(userRequest.email());
+        userModel.setFirstname(userRequest.firstname());
+        userModel.setLastname(userRequest.lastname());
+        userModel.setPassword(passwordEncoder.encode(userRequest.password()));
         userModel.setRole(Role.CUSTOMER);
 
-        repository.save(userModel);
-
-        return userModel;
+        return repository.save(userModel);
     }
 
 
     @Override
-    public boolean updateUser(UUID uuid, RegisterRequest registerRequest) {
+    public boolean updateUser(UUID uuid, UserRequest userRequest) {
         Optional<UserModel> userModelOptional = repository.findById(uuid);
 
         if (userModelOptional.isEmpty()) {
@@ -58,10 +56,13 @@ public class UserServiceImpl implements UserService {
         }
 
         UserModel userModel = userModelOptional.get();
-        userModel.setEmail(registerRequest.email());
-        userModel.setFirstname(registerRequest.firstname());
-        userModel.setLastname(registerRequest.lastname());
-        userModel.setPassword(passwordEncoder.encode(registerRequest.password()));
+        userModel.setEmail(userRequest.email());
+        userModel.setFirstname(userRequest.firstname());
+        userModel.setLastname(userRequest.lastname());
+        userModel.setPassword(passwordEncoder.encode(userRequest.password()));
+        userModel.setSurveys(userRequest.surveys());
+
+        repository.save(userModel);
 
         return true;
     }

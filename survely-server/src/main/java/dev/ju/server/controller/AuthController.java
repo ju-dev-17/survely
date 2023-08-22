@@ -2,7 +2,7 @@ package dev.ju.server.controller;
 
 import dev.ju.server.dto.AuthRequest;
 import dev.ju.server.dto.AuthResponse;
-import dev.ju.server.dto.RegisterRequest;
+import dev.ju.server.dto.UserRequest;
 import dev.ju.server.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,8 +19,8 @@ public class AuthController {
     private final AuthService service;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        AuthResponse authResponse = service.register(registerRequest);
+    public ResponseEntity<?> register(@RequestBody UserRequest request) {
+        AuthResponse authResponse = service.register(request);
 
         if (authResponse == null) {
             return ResponseEntity.badRequest().body("Register failed");
@@ -30,8 +30,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
-        AuthResponse authResponse = service.login(authRequest);
+    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+        AuthResponse authResponse = service.login(request);
 
         if (authResponse == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");

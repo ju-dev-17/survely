@@ -2,7 +2,7 @@ package dev.ju.server.service;
 
 import dev.ju.server.dto.AuthRequest;
 import dev.ju.server.dto.AuthResponse;
-import dev.ju.server.dto.RegisterRequest;
+import dev.ju.server.dto.UserRequest;
 import dev.ju.server.model.UserModel;
 import dev.ju.server.repository.UserRepository;
 import dev.ju.server.security.JwtAuthService;
@@ -22,12 +22,14 @@ public class AuthServiceImpl implements AuthService {
     private final UserService userService;
 
     @Override
-    public AuthResponse register(RegisterRequest registerRequest) {
-        UserModel userModel = userService.createUser(registerRequest);
+    public AuthResponse register(UserRequest userRequest) {
+        UserModel userModel = userService.createUser(userRequest);
 
         String token = jwtAuthService.generateToken(userModel);
 
-        return new AuthResponse(token);
+        return AuthResponse.builder()
+                .token(token)
+                .build();
     }
 
     @Override
@@ -47,6 +49,8 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtAuthService.generateToken(customerModelOptional.get());
 
-        return new AuthResponse(token);
+        return AuthResponse.builder()
+                .token(token)
+                .build();
     }
 }
