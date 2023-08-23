@@ -1,4 +1,4 @@
-const json = {
+const survey = {
     "pages": [
         {
             "name": "",
@@ -26,4 +26,4 @@ const json = {
     "showPageNumbers": false,
 }
 
-export default json;
+export default survey;
