@@ -25,6 +25,14 @@ export const surveyFormDataState = atom({
     },
 });
 
+export const surveyFormPermissionState = atom({
+    key: "surveyFormPermission",
+    default: {
+        hasRestrictedAccess: false,
+        expire: false
+    }
+});
+
 export const addFieldModalState = atom({
     key: 'addFieldModal',
     default: false,

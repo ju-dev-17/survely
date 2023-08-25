@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { Draggable } from "react-beautiful-dnd";
 
@@ -9,11 +8,9 @@ import { surveyFormDataState } from "../../recoil/atom.js";
 
 // eslint-disable-next-line react/prop-types
 export default function FormField({ field, index }) {
-    const [inputValue, setInputValue] = useState(field?.title.toString());
     const [surveyFormData, setSurveyFormData] = useRecoilState(surveyFormDataState);
 
     const handleChange = (event) => {
-        setInputValue(event.target.value);
         const updatedFields = surveyFormData.fields.map((field, i) =>
             i === index ? { ...field, title: event.target.value } : field
         );
@@ -54,7 +51,7 @@ export default function FormField({ field, index }) {
                     <input
                         className="bg-background flex-grow font-medium px-2 focus:outline-none cursor-pointer"
                         onChange={handleChange}
-                        value={inputValue}
+                        value={field.title.toString()}
                     />
                     <img
                         src={reorder}

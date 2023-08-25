@@ -65,7 +65,7 @@ export default function StepOne({ currentStep, nextStep }) {
             </div>
             <button
                 className="bg-primary text-white font-bold py-2 px-4 mb-12 rounded focus:outline-none focus:shadow-outline"
-                onClick={nextStep}
+                onClick={() => surveyFormData.title.length > 0 && nextStep()}
             >
                 Next
             </button>
