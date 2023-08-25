@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import { addFieldModalState, surveyFormDataState } from "../../recoil/atom.js";
 import FormField from "./FormField.jsx";
@@ -21,6 +22,19 @@ export default function StepOne({ currentStep, nextStep }) {
         });
     }
 
+    const handleOnDragEnd = (result) => {
+        if (!result.destination) return;
+
+        const updatedFields = Array.from(surveyFormData.fields);
+        const [reorderedItem] = updatedFields.splice(result.source.index, 1);
+        updatedFields.splice(result.destination.index, 0, reorderedItem);
+
+        setSurveyFormData({
+            ...surveyFormData,
+            fields: updatedFields,
+        });
+    }
+
     return (
         <div className="flex flex-col h-full">
             <h1 className="text-2xl font-bold mb-4">Step 1: Design Form</h1>
@@ -31,17 +45,22 @@ export default function StepOne({ currentStep, nextStep }) {
                     Add field
                 </button>
                 {surveyFormData.fields.length > 0 && (
-                    <div className="flex flex-col gap-2">
-                        {surveyFormData.fields.map((field, index) => (
-                            <FormField
-                                key={index}
-                                surveyFormData={surveyFormData}
-                                setSurveyFormData={setSurveyFormData}
-                                field={field}
-                                index={index}
-                            />
-                        ))}
-                    </div>
+                    <DragDropContext onDragEnd={handleOnDragEnd}>
+                        <Droppable droppableId="formFields">
+                            {(provided) => (
+                                <div
+                                    className="flex flex-col gap-2"
+                                    {...provided.droppableProps}
+                                    ref={provided.innerRef}
+                                >
+                                    {surveyFormData.fields.map((field, i) => (
+                                        <FormField key={i} field={field} index={i} />
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    </DragDropContext>
                 )}
             </div>
             <button

@@ -1,32 +1,26 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { Draggable } from "react-beautiful-dnd";
 
-import close from "../../assets/close-outline.svg";
+import trash from "../../assets/trash-outline.svg";
+import reorder from "../../assets/reorder-three-outline.svg";
+import { surveyFormDataState } from "../../recoil/atom.js";
 
 // eslint-disable-next-line react/prop-types
-export default function FormField({ surveyFormData, setSurveyFormData, field, index }) {
+export default function FormField({ field, index }) {
     const [inputValue, setInputValue] = useState(field?.title.toString());
-    const [isDisabled, _setIsDisabled] = useState(true);
-    const [clickCount, setClickCount] = useState(0);
-
-    const handleClick = () => {
-        setClickCount((prevClickCount) => prevClickCount + 1);
-        if (clickCount === 1) {
-            handleClick();
-            setClickCount(0);
-        }
-    }
+    const [surveyFormData, setSurveyFormData] = useRecoilState(surveyFormDataState);
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
-        const surveyField = surveyFormData.fields.find((_, i) =>  i === index);
-        surveyField.title = inputValue;
-
-        const fields = surveyFormData.fields;
+        const updatedFields = surveyFormData.fields.map((field, i) =>
+            i === index ? { ...field, title: event.target.value } : field
+        );
 
         setSurveyFormData({
             ...surveyFormData,
-            fields
+            fields: updatedFields
         });
     }
 
@@ -41,15 +35,35 @@ export default function FormField({ surveyFormData, setSurveyFormData, field, in
     }
 
     return (
-        <div onClick={handleClick} className="flex justify-start cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2">
-            <span className="bg-gray-400 h-2 w-2 m-2 rounded-full"></span>
-            <input
-                className="flex-grow font-medium px-2 bg-background hover:bg-blue-100 focus:outline-none cursor-pointer"
-                onChange={handleChange}
-                value={inputValue}
-                disabled={isDisabled}
-            />
-            <img onClick={() => deleteField(field, index)} src={close} alt="Delete Field" width={24} height={24} />
-        </div>
+        <Draggable draggableId={index.toString()} index={index}>
+            {(provided) => (
+                <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                    className="w-full flex justify-start text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 select-none"
+                >
+                    <img
+                        onClick={() => deleteField(field, index)}
+                        className="cursor-pointer"
+                        src={trash}
+                        alt="Delete Field"
+                        width={24}
+                        height={24}
+                    />
+                    <input
+                        className="bg-background flex-grow font-medium px-2 focus:outline-none cursor-pointer"
+                        onChange={handleChange}
+                        value={inputValue}
+                    />
+                    <img
+                        src={reorder}
+                        alt="Reorder Field"
+                        width={24}
+                        height={24}
+                    />
+                </div>
+            )}
+        </Draggable>
     );
 }

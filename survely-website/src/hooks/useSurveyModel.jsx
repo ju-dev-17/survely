@@ -25,7 +25,7 @@ export default function useSurveyModel() {
                 }
             ]
         }));
-    }, [survey, surveyFormData]);
+    }, [surveyFormData]);
 
     survey.mode = "display";
 
