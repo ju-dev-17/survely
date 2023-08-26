@@ -1,18 +1,22 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
+import { useRecoilValue } from "recoil";
 
-import {useRecoilValue} from "recoil";
-import {surveyFormPermissionState} from "../../recoil/atom.js";
+import { surveyFormPermissionState } from "../../recoil/atom.js";
 import PermissionCard from "./PermissionCard.jsx";
+import Modal from "../ui/Modal.jsx";
 
 export default function StepThree({ currentStep, prevStep, nextStep }) {
     const surveyPermissions = useRecoilValue(surveyFormPermissionState);
+    const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
+    const [isExpireDateModalVisible, setIsExpireDateModalVisible] = useState(false);
 
     if (currentStep !== 3) {
         return <></>;
     }
 
     return (
-        <div>
+        <>
             <h1 className="text-2xl font-bold mb-4">Step 3: Confirm Form</h1>
             <div className="w-full flex-1 flex flex-col gap-5 py-5">
                 <span className="font-bold text-2xl">Survey Permissions</span>
@@ -30,6 +34,36 @@ export default function StepThree({ currentStep, prevStep, nextStep }) {
                     title="Expiration"
                     description="Define a expiration date or set it to no expiration. Otherwise, the survey will expire after 7 days."
                 />
+                {surveyPermissions.hasRestrictedAccess && (
+                    <>
+                        <span className="font-bold text-2xl">Invite People</span>
+                        <button onClick={() => setIsEmailModalVisible(true)} className="bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Add Person
+                        </button>
+                        <Modal
+                            title="Add E-Mail to list"
+                            isVisible={isEmailModalVisible}
+                            setIsVisible={setIsEmailModalVisible}
+                        >
+
+                        </Modal>
+                    </>
+                )}
+                {surveyPermissions.expire && (
+                    <>
+                        <span className="font-bold text-2xl">Set Expiration</span>
+                        <button onClick={() => setIsExpireDateModalVisible(true)} className="bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            Set Date
+                        </button>
+                        <Modal
+                            title="Choose an expiration date"
+                            isVisible={isExpireDateModalVisible}
+                            setIsVisible={setIsExpireDateModalVisible}
+                        >
+
+                        </Modal>
+                    </>
+                )}
             </div>
             <div className="flex justify-between gap-3 w-full">
                 <button
@@ -42,6 +76,6 @@ export default function StepThree({ currentStep, prevStep, nextStep }) {
                     Confirm
                 </button>
             </div>
-        </div>
+        </>
     );
 }

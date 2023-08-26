@@ -32,8 +32,3 @@ export const surveyFormPermissionState = atom({
         expire: false
     }
 });
-
-export const addFieldModalState = atom({
-    key: 'addFieldModal',
-    default: false,
-});

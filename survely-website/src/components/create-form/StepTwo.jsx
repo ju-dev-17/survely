@@ -21,7 +21,7 @@ export default function StepTwo({ currentStep, prevStep, nextStep }) {
     };
 
     return (
-        <div>
+        <>
             <h1 className="text-2xl font-bold mb-4">Step 2: Permission Check</h1>
             <div className="w-full flex-1 flex flex-col gap-5 py-5">
                 <PermissionCard
@@ -53,6 +53,6 @@ export default function StepTwo({ currentStep, prevStep, nextStep }) {
                     Next
                 </button>
             </div>
-        </div>
+        </>
     );
 }
