@@ -8,17 +8,7 @@ const survey = {
                 {
                     "type": "text",
                     "name": "question",
-                    "title": "Question",
-                },
-                {
-                    "type": "text",
-                    "name": "question",
-                    "title": "Question"
-                },
-                {
-                    "type": "text",
-                    "name": "question",
-                    "title": "Question"
+                    "title": "What does the pickel say?",
                 },
             ],
         }

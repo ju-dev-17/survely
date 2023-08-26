@@ -12,7 +12,7 @@ export default function Modal({ children, title, isVisible, setIsVisible }) {
             <div className="modal-container w-full max-w-screen-xl mx-auto px-6 z-50">
                 <div className="flex justify-center p-4 px-3 py-10">
                     <div className="w-full max-w-md">
-                        <div className="bg-white shadow-md rounded-lg px-3 py-2 mb-4">
+                        <div className="bg-background shadow-md rounded-lg px-3 py-2 mb-4">
                             <div className="text-gray-700 text-lg font-semibold py-2 px-2 flex justify-between items-center">
                                 <span>{title}</span>
                                 <img

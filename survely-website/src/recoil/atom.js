@@ -9,17 +9,7 @@ export const surveyFormDataState = atom({
             {
                 "type": "text",
                 "name": "question",
-                "title": "Question",
-            },
-            {
-                "type": "text",
-                "name": "question",
-                "title": "Question"
-            },
-            {
-                "type": "text",
-                "name": "question",
-                "title": "Question"
+                "title": "What does the cucumber say?",
             },
         ]
     },
@@ -30,5 +20,18 @@ export const surveyFormPermissionState = atom({
     default: {
         hasRestrictedAccess: false,
         expire: false
+    }
+});
+
+export const surveyEmailListState = atom({
+    key: "surveyEmailList",
+    default: []
+});
+
+export const surveyExpirationState = atom({
+    key: "surveyExpiration",
+    default: {
+        startDate: new Date(),
+        endDate: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000) // 7 days in milliseconds
     }
 });

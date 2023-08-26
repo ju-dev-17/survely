@@ -20,12 +20,12 @@ export default function Navbar() {
                     Analytics
                 </Link>
                 {isAuth ? (
-                    <Link to="/auth/login" className="bg-primary px-12 py-3 rounded-lg text-white font-bold select-none hover:shadow-lg transition-all duration-300">
+                    <Link to="/logout" className="bg-primary px-12 py-3 rounded-lg text-white font-bold select-none hover:shadow-lg transition-all duration-300">
                         Logout
                     </Link>
                 ) : (
                     <Link
-                        to="/auth/login"
+                        to="/login"
                         className="bg-primary px-12 py-3 rounded-lg text-white font-bold select-none hover:shadow-lg transition-all duration-300"
                     >
                         Login
