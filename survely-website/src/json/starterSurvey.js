@@ -8,7 +8,7 @@ const survey = {
                 {
                     "type": "text",
                     "name": "question",
-                    "title": "What does the pickel say?",
+                    "title": "What is the capital of germany?",
                 },
             ],
         }

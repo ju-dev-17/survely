@@ -38,7 +38,7 @@ export default function FormField({ field, index }) {
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    className="w-full flex justify-start text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 select-none"
+                    className="w-full flex gap-1 justify-start text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md px-2 py-2 select-none"
                 >
                     <img
                         onClick={() => deleteField(field, index)}
@@ -49,7 +49,7 @@ export default function FormField({ field, index }) {
                         height={24}
                     />
                     <input
-                        className="bg-background flex-grow font-medium px-2 focus:outline-none cursor-pointer"
+                        className="bg-background rounded-lg flex-grow font-medium p-2 focus:outline-none cursor-pointer"
                         onChange={handleChange}
                         value={field.title.toString()}
                     />

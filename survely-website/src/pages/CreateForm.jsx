@@ -21,6 +21,10 @@ export default function CreateForm() {
         setCurrentStep((prevStep) => prevStep - 1);
     }
 
+    const createForm = async () => {
+        // TODO: Call the API
+    }
+
     return (
         <div className="flex justify-around w-full h-full px-32">
             <div className="border-2 rounded-lg w-full flex-1">
@@ -45,7 +49,7 @@ export default function CreateForm() {
                         <StepThree
                             currentStep={currentStep}
                             prevStep={prevStep}
-                            nextStep={nextStep}
+                            createForm={createForm}
                         />
                     </div>
                 </div>

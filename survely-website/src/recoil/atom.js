@@ -9,7 +9,7 @@ export const surveyFormDataState = atom({
             {
                 "type": "text",
                 "name": "question",
-                "title": "What does the cucumber say?",
+                "title": "What is the capital of germany?",
             },
         ]
     },

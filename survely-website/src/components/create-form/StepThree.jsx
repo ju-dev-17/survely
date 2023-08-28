@@ -1,16 +1,20 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
+import toast from "react-hot-toast";
 import Datepicker from "react-tailwindcss-datepicker";
 
 import { surveyEmailListState, surveyExpirationState, surveyFormPermissionState } from "../../recoil/atom.js";
 import PermissionCard from "./PermissionCard.jsx";
 import Modal from "../ui/Modal.jsx";
+import EmailTag from "./EmailTag.jsx";
 
-export default function StepThree({ currentStep, prevStep, nextStep }) {
+export default function StepThree({ currentStep, prevStep, createForm }) {
     const surveyPermissions = useRecoilValue(surveyFormPermissionState);
+
     const [surveyEmailList, setSurveyEmailList] = useRecoilState(surveyEmailListState);
     const [expiration, setExpiration] = useRecoilState(surveyExpirationState);
+
     const [isEmailModalVisible, setIsEmailModalVisible] = useState(false);
     const [email, setEmail] = useState("");
 
@@ -24,14 +28,14 @@ export default function StepThree({ currentStep, prevStep, nextStep }) {
         }
 
         if (surveyEmailList.includes(email)) {
-            // TODO: Show error Toast and return
+            toast.error("E-Mail already exists");
             return;
         }
 
         const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
 
         if (!emailRegex.test(email)) {
-            // TODO: Show error Toast and return
+            toast.error("Enter a valid E-Mail");
             return;
         }
 
@@ -43,7 +47,7 @@ export default function StepThree({ currentStep, prevStep, nextStep }) {
         setEmail("");
         setIsEmailModalVisible(false);
 
-        // TODO: Show success Toast
+        toast.success("E-Mail successfully added to list");
     }
 
     const handleExpirationChange = (newValue) => {console.log("newValue:", newValue);
@@ -75,6 +79,13 @@ export default function StepThree({ currentStep, prevStep, nextStep }) {
                         <button onClick={() => setIsEmailModalVisible(true)} className="bg-secondary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Add Person
                         </button>
+                        {surveyEmailList.length > 0 && (
+                            <div className="flex gap-2 flex-wrap">
+                                {surveyEmailList.map((email, i) => (
+                                    <EmailTag key={i} email={email} />
+                                ))}
+                            </div>
+                        )}
                         <Modal
                             title="Add E-Mail to list"
                             isVisible={isEmailModalVisible}
@@ -113,7 +124,10 @@ export default function StepThree({ currentStep, prevStep, nextStep }) {
                 >
                     Back
                 </button>
-                <button onClick={nextStep} className="bg-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
+                <button
+                    className="bg-primary text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+                    onClick={createForm}
+                >
                     Confirm
                 </button>
             </div>
