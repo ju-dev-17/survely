@@ -1,23 +1,48 @@
+import Chart from "react-apexcharts";
+
 export default function Analytics() {
+    const options = {
+        chart: {
+            id: "basic-area",
+            background: "#f7f8f7",
+        },
+        fill: {
+            type: 'solid',
+            colors: ["#bfc5c1"]
+        },
+        title: {
+            text: "Completed Surveys",
+            align: 'left',
+            margin: 10,
+            offsetX: 0,
+            offsetY: 0,
+            floating: false,
+            style: {
+                fontSize:  '24px',
+                fontWeight:  'bold',
+                fontFamily:  undefined,
+                color:  '#161816'
+            },
+        },
+        xaxis: {
+            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+        }
+    };
+
+    const series = [
+        {
+            name: "series-1",
+            data: [30, 40, 45, 50, 49, 60, 70, 91]
+        }
+    ];
+
     return (
-        <div className="w-full h-full flex gap-1 px-32 items-center">
-            <div className="w-3/4 h-full">
-
-            </div>
-            <div className="w-1/4 h-full border-2 rounded-lg flex flex-col">
-                <div className="flex items-center gap-2 border-b-2 p-3">
-                    <label htmlFor="searchbar">🔍</label>
-                    <input
-                        className="bg-background w-full focus:outline-none"
-                        id="searchbar"
-                        type="text"
-                        placeholder="Search for Survey in Collection.."
-                    />
-                </div>
-                <div className="w-full h-full">
-
-                </div>
-            </div>
+        <div className="w-8/12">
+            <Chart
+                options={options}
+                series={series}
+                type="bar"
+            />
         </div>
     );
 }
