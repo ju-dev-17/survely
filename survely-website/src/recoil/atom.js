@@ -8,8 +8,8 @@ export const surveyFormDataState = atom({
         fields: [
             {
                 "type": "text",
-                "name": "question",
-                "title": "What is the capital of germany?",
+                "name": "Simple Question",
+                "title": "Simple Question",
             },
         ]
     },

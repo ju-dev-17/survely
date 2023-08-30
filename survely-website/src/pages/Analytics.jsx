@@ -12,37 +12,87 @@ export default function Analytics() {
         },
         title: {
             text: "Completed Surveys",
-            align: 'left',
+            align: 'center',
             margin: 10,
             offsetX: 0,
             offsetY: 0,
             floating: false,
             style: {
-                fontSize:  '24px',
+                fontSize:  '28px',
                 fontWeight:  'bold',
                 fontFamily:  undefined,
                 color:  '#161816'
             },
         },
         xaxis: {
-            categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+            categories: ["TITLE", "TITLE", "TITLE", "TITLE", "TITLE", "TITLE", "TITLE", "TITLE", "TITLE"]
         }
     };
 
     const series = [
         {
             name: "series-1",
-            data: [30, 40, 45, 50, 49, 60, 70, 91]
+            data: [30, 40, 45, 50, 49, 60, 70, 91, 50]
         }
     ];
 
     return (
-        <div className="w-8/12">
-            <Chart
-                options={options}
-                series={series}
-                type="bar"
-            />
+        <div className="w-full flex flex-col items-center">
+            <div className="w-8/12">
+                <Chart
+                    options={options}
+                    series={series}
+                    type="bar"
+                />
+            </div>
+            <div className="bg-background w-full h-full flex justify-center">
+                <div className="w-3/4 flex flex-col overflow-x-auto shadow-md border border-gray-300 bg-background">
+                    <div className="sm:-mx-6 lg:-mx-8">
+                        <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                            <div className="overflow-x-auto">
+                                <table className="min-w-full text-left text-sm font-light bg-background">
+                                    <thead className="border-b font-medium">
+                                    <tr>
+                                        <th scope="col" className="px-6 py-4">
+                                            COLUMN
+                                        </th>
+                                        <th scope="col" className="px-6 py-4">
+                                            COLUMN
+                                        </th>
+                                        <th scope="col" className="px-6 py-4">
+                                            COLUMN
+                                        </th>
+                                        <th scope="col" className="px-6 py-4">
+                                            COLUMN
+                                        </th>
+                                        <th scope="col" className="px-6 py-4">
+                                            COLUMN
+                                        </th>
+                                        <th scope="col" className="px-6 py-4">
+                                            COLUMN
+                                        </th>
+                                        <th scope="col" className="px-6 py-4">
+                                            COLUMN
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="border-t">
+                                            <td className="whitespace-nowrap px-6 py-4">Cell</td>
+                                            <td className="whitespace-nowrap px-6 py-4">Cell</td>
+                                            <td className="whitespace-nowrap px-6 py-4">Cell</td>
+                                            <td className="whitespace-nowrap px-6 py-4">Cell</td>
+                                            <td className="whitespace-nowrap px-6 py-4">Cell</td>
+                                            <td className="whitespace-nowrap px-6 py-4">Cell</td>
+                                            <td className="whitespace-nowrap px-6 py-4">Cell</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }

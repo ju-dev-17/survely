@@ -7,8 +7,8 @@ const survey = {
             "elements": [
                 {
                     "type": "text",
-                    "name": "question",
-                    "title": "What is the capital of germany?",
+                    "name": "Simple Question",
+                    "title": "Simple Question",
                 },
             ],
         }
