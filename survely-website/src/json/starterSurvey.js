@@ -2,8 +2,8 @@ const survey = {
     "pages": [
         {
             "name": "",
-            "title": "",
-            "description": "",
+            "title": "Titel",
+            "description": "Description",
             "elements": [
                 {
                     "type": "text",

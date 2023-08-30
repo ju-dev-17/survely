@@ -4,7 +4,7 @@ import homeImage from "../assets/home-image.svg";
 
 export default function Landing() {
     return (
-        <div className="flex flex-col xl:flex-row items-start sm:items-center gap-14 xl:gap-0">
+        <div className="mb-24 flex flex-col xl:flex-row items-start sm:items-center gap-14 xl:gap-0">
             <div className="flex flex-col items-center md:items-start gap-10 sm:gap-20 w-full xl:w-1/2 text-center md:text-start">
                 <div className="flex flex-col gap-3">
                      <span className="text-4xl sm:text-5xl font-bold">
