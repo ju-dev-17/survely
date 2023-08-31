@@ -4,7 +4,7 @@ import Navbar from "../components/ui/Navbar.jsx";
 
 export default function MainLayout() {
     return (
-        <main className="w-full min-h-screen bg-background text-text flex flex-col items-center">
+        <main className="w-full min-h-screen flex flex-col items-center">
             <div className="w-full">
                 <Navbar />
             </div>
