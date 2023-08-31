@@ -25,7 +25,7 @@ export default function SettingsLayout() {
                     </SidebarSection>
                 </Sidebar>
             </div>
-            <div className="w-5/6 min-h-screen bg-white">
+            <div className="w-5/6 min-h-screen bg-white px-48 py-5">
                 <Outlet />
             </div>
         </main>

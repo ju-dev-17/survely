@@ -9,7 +9,7 @@ export default function SidebarButton({ children, to, icon }) {
 
     return (
         <Link
-            className={`flex items-center gap-3 ${currentPath === to ? "bg-primary" : "hover:bg-primary"} transition-all duration-300 p-1 rounded-lg`}
+            className={`flex items-center gap-3 ${currentPath === to ? "bg-secondary" : "hover:bg-secondary"} transition-all duration-200 p-1 rounded-lg`}
             to={to}
         >
             <img src={icon} alt="Sidebar Button" width={18} height={18} />
