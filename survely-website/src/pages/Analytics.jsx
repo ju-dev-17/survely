@@ -31,7 +31,7 @@ export default function Analytics() {
 
     const series = [
         {
-            name: "series-1",
+            name: "Amount of completed Surveys",
             data: [30, 40, 45, 50, 49, 60, 70, 81, 89]
         }
     ];
