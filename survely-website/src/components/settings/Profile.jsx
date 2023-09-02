@@ -28,13 +28,15 @@ export default function Profile() {
             <h1 className="text-3xl font-semibold">Profile</h1>
             <div className="border-t flex flex-col gap-10 py-8">
                 <div className="flex items-center gap-5">
-                    <img
-                        className="rounded-full"
-                        src={profile}
-                        alt="Profile Picture"
-                        width={55}
-                        height={55}
-                    />
+                    <div className="overflow-hidden border-2 border-accent rounded-full">
+                        <img
+                            className="object-cover"
+                            src={profile}
+                            alt="Profile Picture"
+                            width={55}
+                            height={55}
+                        />
+                    </div>
                     <div className="flex flex-col gap-3">
                         <span className="font-semibold">Profile Picture</span>
                         <div className="flex gap-2">

@@ -11,6 +11,16 @@ export const surveyFormDataState = atom({
                 "name": "Simple Question",
                 "title": "Simple Question",
             },
+            {
+                "type": "text",
+                "name": "Simple Question",
+                "title": "Simple Question",
+            },
+            {
+                "type": "text",
+                "name": "Simple Question",
+                "title": "Simple Question",
+            },
         ]
     },
 });
