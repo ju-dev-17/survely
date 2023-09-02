@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useRecoilState } from "recoil";
 
-import PermissionCard from "./PermissionCard.jsx";
+import PermissionCard from "../ui/PermissionCard.jsx";
 import { surveyFormPermissionState } from "../../recoil/atom.js";
 
 export default function StepTwo({ currentStep, prevStep, nextStep }) {

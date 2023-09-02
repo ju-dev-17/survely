@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import Datepicker from "react-tailwindcss-datepicker";
 
 import { surveyEmailListState, surveyExpirationState, surveyFormPermissionState } from "../../recoil/atom.js";
-import PermissionCard from "./PermissionCard.jsx";
+import PermissionCard from "../ui/PermissionCard.jsx";
 import Modal from "../ui/Modal.jsx";
 import EmailTag from "./EmailTag.jsx";
 
